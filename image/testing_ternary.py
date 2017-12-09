@@ -17,10 +17,12 @@ def get_training_data():
             for character in line:
                 if character == ' ':
                     to_append.append(0)
-                elif character == '\n':
-                    pass
-                else:
+                if character == '+':
+                    to_append.append(0.5)
+                if character == '#':
                     to_append.append(1)
+                if character == '\n':
+                    pass
         if line_counter == 28:
             line_counter = 0
             to_append.append(1)
@@ -47,10 +49,12 @@ def get_testing_data():
             for character in line:
                 if character == ' ':
                     to_append.append(0)
-                elif character == '\n':
-                    pass
-                else:
+                if character == '+':
+                    to_append.append(0.5)
+                if character == '#':
                     to_append.append(1)
+                if character == '\n':
+                    pass
         if line_counter == 28:
             line_counter = 0
             to_append.append(1)
@@ -72,8 +76,8 @@ def create_weights():
     return (weights)
 
 
-def train_perceptron_one_epoch(data, labels, weights, epoch_number, alpha_constant=35):
-    alpha = (alpha_constant / (alpha_constant + epoch_number))
+def train_perceptron_one_epoch(data, labels, weights, epoch_number):
+    alpha = (10000 / (10000 + epoch_number))
     for traindigit in range(0, 5000):
         input = data[traindigit]
         correct_label = labels[traindigit]
@@ -88,7 +92,7 @@ def train_perceptron_one_epoch(data, labels, weights, epoch_number, alpha_consta
 
 
 def train_perceptron_one_epoch_differential(data, labels, weights, epoch_number):
-    alpha = (40 / (40 + epoch_number))
+    alpha = (1000 / (1000 + epoch_number))
     for traindigit in range(0, 5000):
         input = data[traindigit]
         correct_label = labels[traindigit]
@@ -158,19 +162,16 @@ def plot_weights(input_weights):
 if __name__ == "__main__":
     train_data, train_labels = get_training_data()
     test_data, test_labels = get_testing_data()
+    weights = create_weights()
     # This Happens in a loop per epoch
-    for constant in range(1, 40):
-        weights = create_weights()
-        for epoch in range(1,10):
-            train_perceptron_one_epoch(train_data, train_labels, weights, epoch, constant)
-            #post_epoch_test(train_data, train_labels, weights)
-            #for j in range(0, 10):
-            #    what_to_plot = [weights[j][i:i + 28] for i in range(0, 784, 28)]
-            #    plot_weights(what_to_plot)
-        confusion_matrix, overall_probablility = overall_accuracy(test_data, test_labels, weights)
-        print('on test the accuracy after 30 epochs is',overall_probablility)
-        print('this was with a constant of', constant)
-
+    for i in range(0, 30):
+        train_perceptron_one_epoch(train_data, train_labels, weights, i)
+        post_epoch_test(train_data, train_labels, weights)
+    #for j in range(0, 10):
+    #    what_to_plot = [weights[j][i:i + 28] for i in range(0, 784, 28)]
+    #    plot_weights(what_to_plot)
+    confusion_matrix, overall_probablility = overall_accuracy(test_data, test_labels, weights)
+    print(overall_probablility)
     for x in range(0, len(confusion_matrix)):
         row = confusion_matrix[x]
         number_of_this_digit = sum(row)
