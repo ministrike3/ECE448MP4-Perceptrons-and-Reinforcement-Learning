@@ -1,6 +1,6 @@
 import tensorflow as tf
 import cv2 #read in pixel data
-import pong #our class
+import gui #our class
 import numpy as np #math
 import random #random 
 from collections import deque #queue data structure. fast appends. and pops. replay memory
@@ -77,7 +77,7 @@ def trainGraph(inp, out, sess):
     train_step = tf.train.AdamOptimizer(1e-6).minimize(cost)
 
     #initialize our game
-    game = pong.PongGame()
+    game = gui.PongGame()
     
     #create a queue for experience replay to store policies
     D = deque()
