@@ -9,9 +9,9 @@ GRID_WIDTH = 12
 GRID_HEIGHT = 12
 PADDLE_HEIGHT = 0.2
 PADDLE_X = 1
-NUMBER_EXPLORED_CONST = 20
+NUMBER_EXPLORED_CONST = 25
 
-DISCOUNT_FACTOR = 0.5
+DISCOUNT_FACTOR = 0.3
 LR_CONSTANT = 20
 
 def discrete_x(location,item_height = 0):
@@ -250,11 +250,10 @@ class QModel:
 		return score
 
 model = QModel()
-model.train(10000)
-for i in range(5):
+model.train(100000)
+for i in range(10):
 	avg_hits = model.test(1000)
-	print ("Avg. hits(" +str(i)+")"+"=" + str(avg_hits))
-
+	print ("Avg. hits(" +str(i+1)+")"+"=" + str(avg_hits))
 
 
 
