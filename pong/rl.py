@@ -1,6 +1,6 @@
 import tensorflow as tf
 import cv2 #read in pixel data
-import pong #our class
+import gui as pong#our class
 import numpy as np #math
 import random #random 
 from collections import deque #queue data structure. fast appends. and pops. replay memory
@@ -20,7 +20,7 @@ OBSERVE = 50000
 #store our experiences, the size of it
 REPLAY_MEMORY = 500000
 #batch size to train on
-BATCH = 100
+BATCH = 1000
 
 #create tensorflow graph
 def createGraph():
@@ -111,7 +111,7 @@ def trainGraph(inp, out, sess):
             maxIndex = random.randrange(ACTIONS)
         else:
             maxIndex = np.argmax(out_t)
-        argmax_t[maxIndex] = 1
+        argmax_t[maxIndex] =1
         
         if epsilon > FINAL_EPSILON:
             epsilon -= (INITIAL_EPSILON - FINAL_EPSILON) / EXPLORE
