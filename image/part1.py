@@ -1,7 +1,6 @@
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-from math import *
 
 
 def get_training_data():
@@ -87,22 +86,6 @@ def train_perceptron_one_epoch(data, labels, weights, epoch_number, alpha_consta
                 weights[correct_label][feature] += input[feature] * alpha
 
 
-def train_perceptron_one_epoch_differential(data, labels, weights, epoch_number):
-    alpha = (40 / (40 + epoch_number))
-    for traindigit in range(0, 5000):
-        input = data[traindigit]
-        correct_label = labels[traindigit]
-        possible_activations = [0] * 10
-        for possible_class in range(0, 10):
-            possible_activations[possible_class] = sum((1/(1+exp(-i[0]*i[1]))) for i in zip(input, weights[possible_class]))
-        guess = possible_activations.index(max(possible_activations))
-        if guess != correct_label:
-            for feature in range(0, 784):
-                weights[guess][feature] -= input[feature] * alpha
-                weights[correct_label][feature] += input[feature] * alpha
-
-
-
 def post_epoch_test(data, labels, weights):
     accuracy = 0
     for testdigit in range(0, len(data)):
@@ -159,17 +142,13 @@ if __name__ == "__main__":
     train_data, train_labels = get_training_data()
     test_data, test_labels = get_testing_data()
     # This Happens in a loop per epoch
-    for constant in range(1, 40):
-        weights = create_weights()
-        for epoch in range(1,10):
-            train_perceptron_one_epoch(train_data, train_labels, weights, epoch, constant)
-            #post_epoch_test(train_data, train_labels, weights)
-            #for j in range(0, 10):
-            #    what_to_plot = [weights[j][i:i + 28] for i in range(0, 784, 28)]
-            #    plot_weights(what_to_plot)
-        confusion_matrix, overall_probablility = overall_accuracy(test_data, test_labels, weights)
-        print('on test the accuracy after 30 epochs is',overall_probablility)
-        print('this was with a constant of', constant)
+    weights = create_weights()
+    constant = 16
+    for epoch in range(0, 30):
+        train_perceptron_one_epoch(train_data, train_labels, weights, epoch, constant)
+        post_epoch_test(train_data, train_labels, weights)
+    confusion_matrix, overall_probability = overall_accuracy(test_data, test_labels, weights)
+    print(overall_probability)
 
     for x in range(0, len(confusion_matrix)):
         row = confusion_matrix[x]
