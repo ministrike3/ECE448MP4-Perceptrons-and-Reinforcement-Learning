@@ -2,23 +2,23 @@ import pygame #helps us make GUI games in python
 import random #help us define which direction the ball will start moving in
 
 #size of our window
-WINDOW_WIDTH = 400
-WINDOW_HEIGHT = 400
+WINDOW_WIDTH = 600
+WINDOW_HEIGHT = 600
 
 #size of our paddle
-PADDLE_WIDTH = 10
-PADDLE_HEIGHT = 60
+PADDLE_WIDTH = 5
+PADDLE_HEIGHT = 120
 #distance from the edge of the window
-PADDLE_BUFFER = 10
+PADDLE_BUFFER = 5
 
 #size of our ball
-BALL_WIDTH = 10
-BALL_HEIGHT = 10
+BALL_WIDTH = 50
+BALL_HEIGHT = 50
 
 #speeds of our paddle and ball
-PADDLE_SPEED = 5
-BALL_X_SPEED = 5
-BALL_Y_SPEED = 5
+PADDLE_SPEED = 25
+BALL_X_SPEED = 25
+BALL_Y_SPEED = 25
 
 #RGB colors for our paddle and ball
 WHITE = (255, 255, 255)
@@ -47,7 +47,7 @@ def drawPaddle1(paddle1YPos):
 
 def drawPaddle2(paddle2YPos):
     #create it, opposite side
-    paddle2 = pygame.Rect(WINDOW_WIDTH - PADDLE_BUFFER - PADDLE_WIDTH, paddle2YPos, PADDLE_WIDTH, PADDLE_HEIGHT)
+    paddle2 = pygame.Rect(WINDOW_WIDTH - PADDLE_BUFFER - PADDLE_WIDTH, paddle2YPos, PADDLE_WIDTH,WINDOW_HEIGHT)
     #draw it
     pygame.draw.rect(screen, WHITE, paddle2)
 
@@ -134,18 +134,6 @@ def updatePaddle1(action, paddle1YPos):
 
 
 def updatePaddle2(paddle2YPos, ballYPos):
-    #move down if ball is in upper half
-    if (paddle2YPos + PADDLE_HEIGHT/2 < ballYPos + BALL_HEIGHT/2):
-        paddle2YPos = paddle2YPos + PADDLE_SPEED
-    #move up if ball is in lower half
-    if (paddle2YPos + PADDLE_HEIGHT/2 > ballYPos + BALL_HEIGHT/2):
-        paddle2YPos = paddle2YPos - PADDLE_SPEED
-    #don't let it hit top
-    if (paddle2YPos < 0):
-        paddle2YPos = 0
-    #dont let it hit bottom
-    if (paddle2YPos > WINDOW_HEIGHT - PADDLE_HEIGHT):
-        paddle2YPos = WINDOW_HEIGHT - PADDLE_HEIGHT
     return paddle2YPos
 
 
@@ -158,7 +146,7 @@ class PongGame:
         self.tally = 0
         #initialie positions of paddle
         self.paddle1YPos = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2
-        self.paddle2YPos = WINDOW_HEIGHT / 2 - PADDLE_HEIGHT / 2
+        self.paddle2YPos = 0
         #and ball direction
         self.ballXDirection = 1
         self.ballYDirection = 1
