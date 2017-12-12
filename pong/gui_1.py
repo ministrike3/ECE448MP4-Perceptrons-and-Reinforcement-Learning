@@ -119,10 +119,10 @@ def updateBall(paddle1YPos, paddle2YPos, ballXPos, ballYPos, ballXDirection, bal
 def updatePaddle1(action, paddle1YPos):
     #if move up
     if (action[1] == 1):
-        paddle1YPos = paddle1YPos - PADDLE_SPEED
+        paddle1YPos = paddle1YPos - 0.5*PADDLE_SPEED
     #if move down
     if (action[2] == 1):
-        paddle1YPos = paddle1YPos + PADDLE_SPEED
+        paddle1YPos = paddle1YPos + 0.5*PADDLE_SPEED
 
     #don't let it move off the screen
     if (paddle1YPos < 0):

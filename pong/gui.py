@@ -135,10 +135,10 @@ def updatePaddle1(action, paddle1YPos):
 def updatePaddle2(paddle2YPos, ballYPos):
     #move down if ball is in upper half
     if (paddle2YPos + PADDLE_HEIGHT/2 < ballYPos + BALL_HEIGHT/2):
-        paddle2YPos = paddle2YPos + PADDLE_SPEED
+        paddle2YPos = paddle2YPos + 0.5*PADDLE_SPEED
     #move up if ball is in lower half
     if (paddle2YPos + PADDLE_HEIGHT/2 > ballYPos + BALL_HEIGHT/2):
-        paddle2YPos = paddle2YPos - PADDLE_SPEED
+        paddle2YPos = paddle2YPos - 0.5*PADDLE_SPEED
     #don't let it hit top
     if (paddle2YPos < 0):
         paddle2YPos = 0
