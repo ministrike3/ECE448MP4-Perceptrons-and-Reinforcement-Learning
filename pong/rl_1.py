@@ -1,6 +1,6 @@
 import tensorflow as tf
 import cv2 #read in pixel data
-import pong_1 #our class
+import gui_1 as pong_1#our class
 import numpy as np #math
 import random #random 
 from collections import deque #queue data structure. fast appends. and pops. replay memory
